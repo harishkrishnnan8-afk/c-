@@ -1,0 +1,273 @@
+1. STUDENT ANALYTICS SYSTEM
+#include <iostream>
+using namespace std;
+
+class Student
+{
+private:
+    string name;
+    int marks;
+
+public:
+    void input()
+    {
+        cin >> name >> marks;
+    }
+
+    int getMarks()
+    {
+        return marks;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+};
+
+class Department
+{
+private:
+    string deptName;
+    int n;
+
+public:
+    Student s[100];
+
+    void input()
+    {
+        cout<<"Department Name: ";
+        cin>>deptName;
+
+        cout<<"Number of Students: ";
+        cin>>n;
+
+        for(int i=0;i<n;i++)
+            s[i].input();
+    }
+
+    void topper()
+    {
+        if(n==0)
+        {
+            cout<<"Empty Department\n";
+            return;
+        }
+
+        int maxMarks=s[0].getMarks();
+        string topper=s[0].getName();
+
+        for(int i=1;i<n;i++)
+        {
+            if(s[i].getMarks()>maxMarks)
+            {
+                maxMarks=s[i].getMarks();
+                topper=s[i].getName();
+            }
+        }
+
+        cout<<"Topper: "<<topper<<" "<<maxMarks<<endl;
+    }
+
+    float passPercentage()
+    {
+        if(n==0)
+            return 0;
+
+        int pass=0;
+
+        for(int i=0;i<n;i++)
+        {
+            if(s[i].getMarks()>=40)
+                pass++;
+        }
+
+        return (pass*100.0)/n;
+    }
+};
+
+int main()
+{
+    int d;
+    cin>>d;
+
+    Department dept[10];
+
+    for(int i=0;i<d;i++)
+        dept[i].input();
+
+    for(int i=0;i<d;i++)
+    {
+        dept[i].topper();
+        cout<<"Pass % = "<<dept[i].passPercentage()<<endl;
+    }
+
+    return 0;
+}
+2. ELECTION VOTING SYSTEM
+#include <iostream>
+using namespace std;
+
+class Candidate
+{
+private:
+    string name;
+    int totalVotes;
+
+public:
+    Candidate()
+    {
+        totalVotes=0;
+    }
+
+    void setName(string n)
+    {
+        name=n;
+    }
+
+    void addVotes(int v)
+    {
+        totalVotes+=v;
+    }
+
+    int getVotes()
+    {
+        return totalVotes;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+};
+
+int main()
+{
+    int regions,candidates;
+
+    cin>>regions>>candidates;
+
+    Candidate c[50];
+
+    for(int i=0;i<candidates;i++)
+    {
+        string name;
+        cin>>name;
+        c[i].setName(name);
+    }
+
+    for(int i=0;i<regions;i++)
+    {
+        for(int j=0;j<candidates;j++)
+        {
+            int votes;
+            cin>>votes;
+
+            if(votes<0)
+                votes=0;
+
+            c[j].addVotes(votes);
+        }
+    }
+
+    int maxVotes=c[0].getVotes();
+    string winner=c[0].getName();
+
+    for(int i=1;i<candidates;i++)
+    {
+        if(c[i].getVotes()>maxVotes)
+        {
+            maxVotes=c[i].getVotes();
+            winner=c[i].getName();
+        }
+    }
+
+    cout<<"Overall Winner: "<<winner;
+}
+
+3. RETAIL CHAIN MANAGEMENT SYSTEM
+#include <iostream>
+using namespace std;
+
+class Product
+{
+private:
+    string name;
+    float price;
+    int quantity;
+
+public:
+    void input()
+    {
+        cin>>name>>price>>quantity;
+    }
+
+    float sales()
+    {
+        return price*quantity;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+};
+
+class Store
+{
+private:
+    int n;
+
+public:
+    Product p[100];
+    static float overallSales;
+
+    void input()
+    {
+        cin>>n;
+
+        for(int i=0;i<n;i++)
+            p[i].input();
+    }
+
+    float calculateStoreSales()
+    {
+        float total=0;
+
+        for(int i=0;i<n;i++)
+            total+=p[i].sales();
+
+        overallSales+=total;
+
+        return total;
+    }
+};
+
+float Store::overallSales=0;
+
+int main()
+{
+    int stores;
+    cin>>stores;
+
+    Store s[20];
+
+    float bestSales=0;
+    int bestStore=0;
+
+    for(int i=0;i<stores;i++)
+    {
+        s[i].input();
+
+        float total=s[i].calculateStoreSales();
+
+        if(total>bestSales)
+        {
+            bestSales=total;
+            bestStore=i;
+        }
+    }
+
+    cout<<"Best Store = "<<bestStore+1<<endl;
+    cout<<"Overall Sales = "<<Store::overallSales;
+}
