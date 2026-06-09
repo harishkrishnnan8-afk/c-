@@ -1,0 +1,80 @@
+2. ELECTION VOTING SYSTEM
+#include <iostream>
+using namespace std;
+
+class Candidate
+{
+private:
+    string name;
+    int totalVotes;
+
+public:
+    Candidate()
+    {
+        totalVotes=0;
+    }
+
+    void setName(string n)
+    {
+        name=n;
+    }
+
+    void addVotes(int v)
+    {
+        totalVotes+=v;
+    }
+
+    int getVotes()
+    {
+        return totalVotes;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+};
+
+int main()
+{
+    int regions,candidates;
+
+    cin>>regions>>candidates;
+
+    Candidate c[50];
+
+    for(int i=0;i<candidates;i++)
+    {
+        string name;
+        cin>>name;
+        c[i].setName(name);
+    }
+
+    for(int i=0;i<regions;i++)
+    {
+        for(int j=0;j<candidates;j++)
+        {
+            int votes;
+            cin>>votes;
+
+            if(votes<0)
+                votes=0;
+
+            c[j].addVotes(votes);
+        }
+    }
+
+    int maxVotes=c[0].getVotes();
+    string winner=c[0].getName();
+
+    for(int i=1;i<candidates;i++)
+    {
+        if(c[i].getVotes()>maxVotes)
+        {
+            maxVotes=c[i].getVotes();
+            winner=c[i].getName();
+        }
+    }
+
+    cout<<"Overall Winner: "<<winner;
+}
