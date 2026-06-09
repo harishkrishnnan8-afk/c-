@@ -136,3 +136,103 @@ Output:
 Empty Department
 Pass % = 0
 
+-------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+
+class Election
+{
+public:
+    static int totalVotes;
+    static int maxVotes;
+    static int winnerIndex;
+
+    void process(int votes[][50], int regions, int candidates)
+    {
+        int total[50] = {0};
+
+        for(int j = 0; j < candidates; j++)
+        {
+            for(int i = 0; i < regions; i++)
+            {
+                total[j] += votes[i][j];
+                totalVotes += votes[i][j];
+            }
+            if(total[j] > maxVotes)
+            {
+                maxVotes = total[j];
+                winnerIndex = j;
+            }
+        }
+        cout << "\n===== RESULT =====\n";
+        cout << "Total Votes = " << totalVotes << endl;
+        cout << "Winner Candidate Index = " << winnerIndex + 1 << endl;
+        cout << "Max Votes = " << maxVotes << endl;
+    }
+};
+int Election::totalVotes = 0;
+int Election::maxVotes = 0;
+int Election::winnerIndex = 0;
+int main()
+{
+    int regions, candidates;
+
+    cout << "Enter number of regions: ";
+    cin >> regions;
+
+    cout << "Enter number of candidates: ";
+    cin >> candidates;
+
+    int votes[50][50];
+
+    cout << "\nEnter votes (region-wise):\n";
+
+    for(int i = 0; i < regions; i++)
+    {
+        cout << "Region " << i + 1 << ":\n";
+
+        for(int j = 0; j < candidates; j++)
+        {
+            cout << "Candidate " << j + 1 << ": ";
+            cin >> votes[i][j];
+        }
+    }
+
+    Election e;
+    e.process(votes, regions, candidates);
+
+    return 0;
+}
+
+
+TEST CASE(BEST CASE)
+ Input
+Enter number of regions: 2
+Enter number of candidates: 3
+
+Region 1:
+100 150 120
+
+Region 2:
+200 100 180
+________________________________________
+ Output
+Total Votes = 850
+Winner Candidate Index = 1
+Max Votes = 300
+TEST CASE (WORST CASE)
+Input
+Enter number of regions: 2
+Enter number of candidates: 3
+
+Region 1:
+0 0 0
+
+Region 2:
+0 0 0
+________________________________________
+ Output
+Total Votes = 0
+There is no winner candidate
+Max Votes = 0
