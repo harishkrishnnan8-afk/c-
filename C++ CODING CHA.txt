@@ -104,3 +104,35 @@ int main()
 
     return 0;
 }
+
+OUTPUT:
+Test Cases
+Case 1 (BEST CASE)
+Input:
+Departments = 1
+IT
+Students:
+Harish 80
+Ravi 90
+John 70
+Output:
+Topper: Ravi 90
+Pass % = 100%
+CASE 2 (WORST CASE)
+Departments:1
+CSE
+Students:3
+Harish 20
+Ravi 35
+John 10
+Output:
+Topper: Ravi 35
+Pass % = 0
+CASE 3(EMPTY STUDENT)
+Departments: 1
+CSE
+Students:0
+Output:
+Empty Department
+Pass % = 0
+
